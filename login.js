@@ -6,56 +6,11 @@ const showLoginBtn = document.getElementById('showLogin');
 
 const API = "https://haven-homes-backend.onrender.com/api";
 
-/* ---------------- LOGIN FORM ---------------- */
-if (loginForm) {
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    if (!email || !password) {
-      loginMessage.textContent = "Please fill both fields";
-      loginMessage.style.color = "red";
-      return;
-    }
-
-    try {
-      const res = await fetch(`${API}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json();
-
-      if (res.status === 200) {
-        loginMessage.style.color = "green";
-        loginMessage.textContent = data.message;
-
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", email);
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 500);
-      } else {
-        loginMessage.style.color = "red";
-        loginMessage.textContent = data.message || "Login failed";
-      }
-
-    } catch (err) {
-      loginMessage.style.color = "red";
-      loginMessage.textContent = "Server error. Try again!";
-    }
-  });
-}
-
 /* ---------------- SHOW SIGNUP FORM ---------------- */
 if (showSignupBtn) {
   showSignupBtn.addEventListener('click', () => {
-    document.getElementById('loginForm').style.display = "none";
-    document.getElementById('loginMessage').style.display = "none";
+    loginForm.style.display = "none";
+    loginMessage.style.display = "none";
     document.getElementById('signupContainer').style.display = "block";
   });
 }
@@ -64,8 +19,8 @@ if (showSignupBtn) {
 if (showLoginBtn) {
   showLoginBtn.addEventListener('click', () => {
     document.getElementById('signupContainer').style.display = "none";
-    document.getElementById('loginForm').style.display = "block";
-    document.getElementById('loginMessage').style.display = "block";
+    loginForm.style.display = "block";
+    loginMessage.style.display = "block";
   });
 }
 
@@ -86,7 +41,7 @@ if (signupForm) {
     }
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/signup', {
+      const res = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, mobile, role })
@@ -96,11 +51,13 @@ if (signupForm) {
 
       if (res.status === 201) {
         alert("Signup successful! Please login.");
+
         document.getElementById('signupContainer').style.display = "none";
-        document.getElementById('loginForm').style.display = "block";
-        document.getElementById('loginMessage').style.display = "block";
+        loginForm.style.display = "block";
+        loginMessage.style.display = "block";
+        signupForm.reset();
       } else {
-        alert(data.message);
+        alert(data.message || "Signup failed");
       }
 
     } catch (err) {
