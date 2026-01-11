@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Loan Offers - Haven Homes</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .offers-container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .offer-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .offer-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="offers-container">
+    <h2>Home Loan Offers</h2>
+    <div id="offersList"></div>
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    const loanOffers = [
+      {
+        bank: "Bank A",
+        interest: "7.5%",
+        maxTenure: "20 years",
+        minLoan: "₹5,00,000",
+        maxLoan: "₹2,00,00,000",
+        details: "Special offer for first-time home buyers."
+      },
+      {
+        bank: "Bank B",
+        interest: "8%",
+        maxTenure: "25 years",
+        minLoan: "₹10,00,000",
+        maxLoan: "₹3,00,00,000",
+        details: "Low processing fees and quick approval."
+      },
+      {
+        bank: "Bank C",
+        interest: "6.9%",
+        maxTenure: "15 years",
+        minLoan: "₹2,00,000",
+        maxLoan: "₹1,50,00,000",
+        details: "Exclusive for salaried individuals."
+      }
+    ];
+
+    const offersList = document.getElementById("offersList");
+
+    loanOffers.forEach(offer => {
+      const card = document.createElement("div");
+      card.classList.add("offer-card");
+      card.innerHTML = `
+        <h4>${offer.bank}</h4>
+        <p>Interest Rate: ${offer.interest}</p>
+        <p>Max Tenure: ${offer.maxTenure}</p>
+        <p>Loan Amount: ${offer.minLoan} - ${offer.maxLoan}</p>
+        <p>Details: ${offer.details}</p>
+      `;
+      offersList.appendChild(card);
+    });
+  </script>
+</body>
+</html>

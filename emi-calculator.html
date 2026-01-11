@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator - Haven Homes</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Extra styling specific to EMI Calculator */
+    .emi-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .emi-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    .emi-container label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .emi-container input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .emi-container button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .emi-container button:hover {
+      background: #0056b3;
+    }
+
+    .emi-result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f4f8ff;
+      border: 1px solid #cce0ff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="emi-container">
+    <h2>EMI Calculator</h2>
+    
+    <label for="loanAmount">Loan Amount (₹)</label>
+    <input type="number" id="loanAmount" placeholder="Enter loan amount">
+
+    <label for="interestRate">Annual Interest Rate (%)</label>
+    <input type="number" id="interestRate" placeholder="Enter interest rate">
+
+    <label for="loanTenure">Loan Tenure (in years)</label>
+    <input type="number" id="loanTenure" placeholder="Enter tenure in years">
+
+    <button onclick="calculateEMI()">Calculate EMI</button>
+
+    <div class="emi-result" id="emiResult">Your EMI will appear here</div>
+
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    function calculateEMI() {
+      let loanAmount = parseFloat(document.getElementById('loanAmount').value);
+      let interestRate = parseFloat(document.getElementById('interestRate').value) / 12 / 100;
+      let loanTenure = parseFloat(document.getElementById('loanTenure').value) * 12;
+
+      if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure) || loanAmount <= 0 || loanTenure <= 0) {
+        document.getElementById('emiResult').innerText = "Please enter valid values.";
+        return;
+      }
+
+      let emi = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTenure)) / 
+                (Math.pow(1 + interestRate, loanTenure) - 1);
+
+      document.getElementById('emiResult').innerText = `Your Monthly EMI: ₹${emi.toFixed(2)}`;
+    }
+  </script>
+
+</body>
+</html>

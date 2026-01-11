@@ -1,0 +1,600 @@
+/* ===========================
+   GENERAL STYLING
+   =========================== */
+
+/* Default body styling for ALL pages EXCEPT login */
+body:not(.login-page) {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+}
+
+/* Background image ONLY for login page */
+body.login-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: url('background.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===========================
+   DASHBOARD STYLING
+   =========================== */
+h1 {
+  margin: 20px 0;
+  font-size: 2.5rem;
+  color: #1e3a8a;
+  text-align: center;
+}
+
+h2 {
+  margin: 15px 0;
+  font-size: 1.5rem;
+  color: #1e3a8a;
+  text-align: left;
+  width: 100%;
+  max-width: 1200px;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 5px;
+}
+
+/* Form containers / cards */
+.form-container {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 15px auto;
+  width: calc(100% - 40px);
+  max-width: 1200px;
+  box-shadow: none;
+  transition: none;
+}
+
+/* Inputs & selects */
+input, select {
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+/* Search bar for houses */
+.search-container {
+  margin: 10px auto;
+  text-align: right;
+  width: calc(100% - 40px);
+  max-width: 1200px;
+}
+
+/* Buttons */
+button {
+  padding: 10px 15px;
+  margin: 10px 5px 0 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ===========================
+   TABLES
+   =========================== */
+table {
+  border-collapse: collapse;
+  width: 100%;           /* full width */
+  max-width: 1200px;     /* same as Advice & Tools */
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #3b82f6;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #e0f2fe;
+}
+
+tr:hover {
+  background-color: #bae6fd;
+  transition: 0.2s;
+}
+
+/* ===========================
+   LOGIN PAGE ONLY
+   =========================== */
+.login-container {
+  max-width: 350px;
+  margin: auto;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  width: 90%;
+}
+
+.login-container input,
+.login-container button {
+  width: 100% !important;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  body.login-page {
+    background-attachment: scroll;
+  }
+
+  .login-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+    font-size: 14px;
+  }
+}
+
+select {
+  color: black;
+}
+
+/* ---------------- STICKY NAVIGATION ---------------- */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  justify-content: space-between;
+}
+
+.sticky-nav .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sticky-nav .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  height: 60px;
+  width: auto;
+  margin-right: 140px;
+  margin-left: 120px;
+}
+
+.sticky-nav button {
+  background: linear-gradient(45deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-weight: 500;
+  font-size: 19px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sticky-nav button:hover {
+  background: linear-gradient(45deg, #2563eb, #1d4ed8);
+  transform: scale(1.05);
+}
+
+.sticky-nav .nav-right button {
+  background: linear-gradient(45deg, #ef4444, #ef4444);
+  color: white;
+  font-weight: 500;
+  font-size: 19px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  margin-left: 100px;
+  margin-right: 50px;
+}
+
+.sticky-nav .nav-right button:hover {
+  transform: scale(1.05);
+}
+
+/* Multi-field search bar */
+.search-container input,
+.search-container select {
+  padding: 8px 12px;
+  margin: 5px 5px 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.search-container button {
+  margin-top: 5px;
+  background: linear-gradient(45deg, #3b82f6, #2563eb);
+}
+
+/* 🔍 Filter Bar Styling */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.filter-bar button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.filter-bar button:hover {
+  background: #0056b3;
+}
+
+/* ---------------- HELP SECTION ---------------- */
+#helpSection {
+  display: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 1200px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+/* ---------------- Recent Houses Cards ---------------- */
+.recent-houses-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+  justify-content: flex-start;
+  max-width: 1200px;   /* match Advice & Tools */
+}
+
+.property-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  width: 250px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.property-card h4 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.property-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.property-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.property-card button:hover {
+  background-color: #0056b3;
+}
+
+#recentHousesContainer {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;   /* match Advice & Tools */
+}
+
+/* ---------------- ADVICE & TOOLS CARDS ---------------- */
+.advice-tools-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.advice-tools-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.advice-tool-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  flex: 1 1 calc(20% - 16px);
+  max-width: 220px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-align: center;
+}
+
+.advice-tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.advice-tool-card h4 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.advice-tool-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.calculator {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.calculator label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.calculator input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.calculator button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.calculator button:hover {
+  background: #0056b3;
+}
+
+#results {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e9f7ef;
+  border-radius: 8px;
+}
+
+/* Section Heading */
+.section-heading {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.section-heading .brand {
+  color: #ffd700;
+}
+
+/* Flex container for image + text */
+.promo-content {
+  display: flex;
+  gap: 30px; /* space between image and text */
+  flex-wrap: nowrap; /* keep text on the right of image */
+  align-items: flex-start;
+}
+
+/* Left side image */
+.promo-left {
+  flex: 0 0 30%; /* reduced from 35% to 30% for closer text */
+  min-width: 250px;
+  margin: 0;
+}
+
+.promo-left img.promo-img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Right side text + brands + buttons */
+.promo-right {
+  flex: 1; /* takes remaining 70% */
+  min-width: 300px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3; /* tighter line spacing */
+}
+
+.promo-right h3,
+.promo-right p {
+  margin-top: 0;       /* remove default top margin */
+  margin-bottom: 5px;  /* reduce bottom margin for closer spacing */
+  font-size: 1.1rem;   /* adjust text size as needed */
+}
+
+.promo-right h3 {
+  font-size: 1.8rem;   /* heading size */
+  font-weight: bold;
+}
+
+/* Brand highlight images */
+.brands-row img {
+  max-height: 80px;
+  margin-left: 30px;
+  vertical-align: middle;
+}
+
+/* Overall interior promo section */
+/* Overall interior promo section */
+.interior-promo {
+  max-width: 1200px; /* same as other sections */
+  margin: 0 auto;    /* center it */
+  padding: 0;        /* remove internal padding to match other sections */
+  box-sizing: border-box;
+}
+
+
+/* Responsive: stack image and text on smaller screens */
+@media (max-width: 768px) {
+  .promo-content {
+    flex-wrap: wrap;
+  }
+  .promo-left,
+  .promo-right {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+}
+/* ======== ANALYTICS CARDS ======== */
+.analytics-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.analytic-card {
+  flex: 1;
+  min-width: 180px;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+}
+
+.analytic-card h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #2a4b8d;
+  font-weight: bold;
+}
+
+.analytic-card p {
+  font-size: 0.9rem;
+  margin: 5px 0 0;
+  font-weight: 500;
+  color: #555;
+}

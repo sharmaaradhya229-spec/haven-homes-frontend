@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interior Budget Estimator - Haven Homes</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .budget-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .budget-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    .budget-container label {
+      display: block;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .budget-container input, .budget-container select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .budget-container button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .budget-container button:hover {
+      background: #0056b3;
+    }
+
+    .budget-result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f4f8ff;
+      border: 1px solid #cce0ff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="budget-container">
+    <h2>Interior Budget Estimator</h2>
+
+    <label for="totalArea">Total Area (sq.ft)</label>
+    <input type="number" id="totalArea" placeholder="Enter total carpet area">
+
+    <label for="furnishingLevel">Furnishing Level</label>
+    <select id="furnishingLevel">
+      <option value="basic">Basic</option>
+      <option value="standard">Standard</option>
+      <option value="premium">Premium</option>
+    </select>
+
+    <label for="numRooms">Number of Rooms</label>
+    <input type="number" id="numRooms" placeholder="Enter number of rooms">
+
+    <button onclick="calculateBudget()">Calculate Estimated Budget</button>
+
+    <div class="budget-result" id="budgetResult">Estimated cost will appear here</div>
+
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    function calculateBudget() {
+      const area = parseFloat(document.getElementById('totalArea').value);
+      const rooms = parseInt(document.getElementById('numRooms').value);
+      const furnishing = document.getElementById('furnishingLevel').value;
+
+      if (isNaN(area) || isNaN(rooms) || area <= 0 || rooms <= 0) {
+        document.getElementById('budgetResult').innerText = "Please enter valid values.";
+        return;
+      }
+
+      // Basic per sq.ft cost for each furnishing level
+      let costPerSqFt;
+      switch(furnishing) {
+        case 'basic': costPerSqFt = 800; break;
+        case 'standard': costPerSqFt = 1500; break;
+        case 'premium': costPerSqFt = 2500; break;
+        default: costPerSqFt = 1000;
+      }
+
+      // Extra cost per room (optional: furniture + decor)
+      const extraPerRoom = 5000;
+
+      const totalCost = (area * costPerSqFt) + (rooms * extraPerRoom);
+
+      document.getElementById('budgetResult').innerText = `Estimated Interior Cost: ₹${totalCost.toLocaleString()}`;
+    }
+  </script>
+
+</body>
+</html>

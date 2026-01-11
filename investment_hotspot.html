@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Hotspot - Haven Homes</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hotspot-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .hotspot-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #007bff;
+    }
+
+    .hotspot-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .hotspot-card {
+      background: #f4f8ff;
+      border: 1px solid #cce0ff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .hotspot-card:hover {
+      transform: scale(1.05);
+    }
+
+    .hotspot-card h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+
+    .hotspot-card p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .map-preview {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hotspot-container">
+    <h2>Investment Hotspots</h2>
+
+    <div class="hotspot-cards" id="hotspotCards">
+      <!-- Cards will be dynamically generated -->
+    </div>
+
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    // Example hotspot data (replace with API if needed)
+    const hotspots = [
+      { name: "Downtown", rental_yield: 6.5, appreciation: 8, occupancy: 95, address: "Downtown, City" },
+      { name: "Uptown", rental_yield: 5.8, appreciation: 7, occupancy: 90, address: "Uptown, City" },
+      { name: "Green Park", rental_yield: 6.2, appreciation: 9, occupancy: 92, address: "Green Park, City" },
+      { name: "Lakeview", rental_yield: 6.8, appreciation: 10, occupancy: 97, address: "Lakeview, City" }
+    ];
+
+    const container = document.getElementById("hotspotCards");
+    hotspots.forEach(hotspot => {
+      const card = document.createElement("div");
+      card.classList.add("hotspot-card");
+      card.innerHTML = `
+        <h3>${hotspot.name}</h3>
+        <p>Rental Yield: ${hotspot.rental_yield}%</p>
+        <p>Appreciation: ${hotspot.appreciation}%</p>
+        <p>Occupancy: ${hotspot.occupancy}%</p>
+        <iframe
+          class="map-preview"
+          src="https://www.google.com/maps?q=${encodeURIComponent(hotspot.address)}&output=embed"
+          loading="lazy">
+        </iframe>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House Details</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .main-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* House details card */
+    .house-details {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .house-details p {
+      margin: 6px 0;
+      font-size: 16px;
+    }
+
+    .house-details p strong {
+      width: 150px;
+      display: inline-block;
+      color: #333;
+    }
+
+    /* Buttons container */
+    #buttonContainer {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    #buttonContainer button {
+      padding: 10px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    #editButton {
+      background: linear-gradient(45deg, #007bff, #0056b3);
+      box-shadow: 0 4px 6px rgba(0, 123, 255, 0.4);
+    }
+
+    #editButton:hover {
+      background: linear-gradient(45deg, #0056b3, #003f7f);
+      box-shadow: 0 6px 8px rgba(0, 86, 179, 0.5);
+    }
+
+    #backButton {
+      background: linear-gradient(45deg, #6c757d, #5a6268);
+      box-shadow: 0 4px 6px rgba(108, 117, 125, 0.4);
+    }
+
+    #backButton:hover {
+      background: linear-gradient(45deg, #5a6268, #484e52);
+      box-shadow: 0 6px 8px rgba(90, 98, 104, 0.5);
+    }
+
+    /* Edit form styling */
+    #editHouseForm {
+      display: none;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+    }
+
+    #editHouseForm input,
+    #editHouseForm select,
+    #editHouseForm button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #editHouseForm button {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #editHouseForm button:hover {
+      background-color: #218838;
+    }
+
+    #editHouseForm #cancelEdit {
+      background-color: #dc3545;
+      margin-top: 5px;
+    }
+
+    #editHouseForm #cancelEdit:hover {
+      background-color: #c82333;
+    }
+
+    /* Tenants table */
+    .form-container {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    @media screen and (max-width: 768px) {
+      #buttonContainer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>House Details</h1>
+  <div class="main-container">
+
+    <!-- House details -->
+    <div class="house-details" id="houseDetails"></div>
+
+    <!-- Buttons: Edit + Back -->
+    <div id="buttonContainer">
+      <button id="editButton">Edit House Details</button>
+      <button id="backButton">Back to Dashboard</button>
+    </div>
+
+    <!-- Edit Form -->
+    <form id="editHouseForm">
+      <input type="hidden" id="editHouseId">
+      <input type="text" id="editHouseAddress" placeholder="Address" required>
+      <select id="editHouseStatus" required>
+        <option value="empty">Empty</option>
+        <option value="filled">Filled</option>
+      </select>
+      <input type="number" id="editHouseRent" placeholder="Rent Price" step="0.01" required>
+      <input type="text" id="editHouseType" placeholder="House Type" required>
+      <select id="editHouseFurnished" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+      <input type="text" id="editHouseOwner" placeholder="Owner Name" required>
+      <input type="number" id="editHouseArea" placeholder="Carpet Area (sq.ft)" step="0.01" required>
+      <button type="submit">Apply Changes</button>
+      <button type="button" id="cancelEdit">Cancel</button>
+    </form>
+
+    <!-- Tenants table -->
+    <section class="form-container">
+      <h2>Tenants in this House</h2>
+      <table id="tenantsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Contract End</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+  </div>
+
+  <script>
+    const apiBase = "http://127.0.0.1:5000/api";
+    const houseId = new URLSearchParams(window.location.search).get("id");
+
+    const editButton = document.getElementById("editButton");
+    const editForm = document.getElementById("editHouseForm");
+    const cancelEdit = document.getElementById("cancelEdit");
+    const backButton = document.getElementById("backButton");
+
+    backButton.addEventListener("click", () => {
+      window.location.href = "dashboard.html";
+    });
+
+    async function loadHouseDetails() {
+      try {
+        const res = await fetch(`${apiBase}/houses/${houseId}`);
+        if (!res.ok) throw new Error("Failed to fetch house details");
+        const house = await res.json();
+
+        const detailsDiv = document.getElementById("houseDetails");
+        detailsDiv.innerHTML = `
+          <p><strong>Address:</strong> ${house.address}</p>
+          <p><strong>Status:</strong> ${house.status}</p>
+          <p><strong>Rent Price:</strong> ₹${house.rent_price || 0}</p>
+          <p><strong>House Type:</strong> ${house.house_type || ""}</p>
+          <p><strong>Furnished:</strong> ${house.furnished || "Yes"}</p>
+          <p><strong>Owner Name:</strong> ${house.owner_name || ""}</p>
+          <p><strong>Carpet Area (sq.ft):</strong> ${house.area_sqft || 0}</p>
+        `;
+
+        document.getElementById("editHouseId").value = house.id;
+        document.getElementById("editHouseAddress").value = house.address;
+        document.getElementById("editHouseStatus").value = house.status;
+        document.getElementById("editHouseRent").value = house.rent_price || 0;
+        document.getElementById("editHouseType").value = house.house_type || "";
+        document.getElementById("editHouseFurnished").value = house.furnished || "Yes";
+        document.getElementById("editHouseOwner").value = house.owner_name || "";
+        document.getElementById("editHouseArea").value = house.area_sqft || 0;
+
+        const tbody = document.querySelector("#tenantsTable tbody");
+        tbody.innerHTML = "";
+        if (house.tenants && house.tenants.length > 0) {
+          house.tenants.forEach(tenant => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${tenant.id}</td>
+              <td>${tenant.name}</td>
+              <td>${tenant.contract_end}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="3">No tenants found</td></tr>`;
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Could not load house details");
+      }
+    }
+
+    editButton.addEventListener("click", () => {
+      editForm.style.display = "block";
+      editButton.style.display = "none";
+    });
+
+    cancelEdit.addEventListener("click", () => {
+      editForm.style.display = "none";
+      editButton.style.display = "inline-block";
+    });
+
+    document.getElementById("editHouseForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const id = document.getElementById("editHouseId").value;
+      const address = document.getElementById("editHouseAddress").value.trim();
+      const status = document.getElementById("editHouseStatus").value;
+      let rent_price = parseFloat(document.getElementById("editHouseRent").value.trim() || 0);
+      const house_type = document.getElementById("editHouseType").value.trim();
+      const furnished = document.getElementById("editHouseFurnished").value;
+      const owner_name = document.getElementById("editHouseOwner").value.trim();
+      let area_sqft = parseFloat(document.getElementById("editHouseArea").value.trim() || 0);
+
+      try {
+        const res = await fetch(`${apiBase}/edit-house/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address, status, rent_price, house_type, furnished, owner_name, area_sqft }),
+        });
+        if (!res.ok) throw new Error("Failed to save changes");
+        alert("House details updated successfully");
+        editForm.style.display = "none";
+        editButton.style.display = "inline-block";
+        loadHouseDetails();
+      } catch (err) {
+        console.error(err);
+        alert("Failed to save changes");
+      }
+    });
+
+    loadHouseDetails();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rates & Trends - Haven Homes</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .trends-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .trends-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Updated table header color */
+    th {
+      background-color: #007bff; /* same blue as other sections */
+      color: white;
+    }
+
+    .chart-container {
+      margin-top: 30px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="trends-container">
+    <h2>Property Rates & Trends</h2>
+
+    <!-- Table for average rents and prices -->
+    <table id="ratesTable">
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th>Avg. Rent (₹/month)</th>
+          <th>Avg. Price (₹/sq.ft)</th>
+          <th>Trend (Last 6 months)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be dynamically generated -->
+      </tbody>
+    </table>
+
+    <!-- Chart container -->
+    <div class="chart-container">
+      <canvas id="trendChart"></canvas>
+    </div>
+
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    // Example Data (Can be replaced with API fetch)
+    const locations = ["Downtown", "Uptown", "Suburbs", "Green Park", "Lakeview"];
+    const avgRent = [25000, 22000, 18000, 20000, 23000];
+    const avgPrice = [12000, 10000, 8000, 9500, 11000];
+    const trends = [
+      [11000, 11200, 11500, 11800, 11900, 12000],  // Downtown
+      [9500, 9700, 9800, 9900, 10000, 10000],     // Uptown
+      [7500, 7700, 7800, 7900, 8000, 8000],       // Suburbs
+      [9000, 9200, 9400, 9500, 9600, 9500],       // Green Park
+      [10000, 10200, 10400, 10600, 10800, 11000]  // Lakeview
+    ];
+
+    const tbody = document.querySelector("#ratesTable tbody");
+    locations.forEach((loc, i) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${loc}</td>
+        <td>₹${avgRent[i].toLocaleString()}</td>
+        <td>₹${avgPrice[i].toLocaleString()}</td>
+        <td>${trends[i][trends[i].length - 1] > trends[i][0] ? '⬆️' : '⬇️'}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    // Chart.js: Trend chart
+    const ctx = document.getElementById('trendChart').getContext('2d');
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const datasets = locations.map((loc, i) => ({
+      label: loc,
+      data: trends[i],
+      borderWidth: 2,
+      fill: false,
+      tension: 0.2,
+    }));
+
+    new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' }, title: { display: true, text: 'Price Trends (₹/sq.ft)' } },
+        scales: { y: { beginAtZero: false } }
+      }
+    });
+  </script>
+
+</body>
+</html>
